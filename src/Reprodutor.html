@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Reproduzindo Músicas </title>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div class="janela">
+            <div class="janela-faixas">
+                <div class="faixa">
+                    <label for="arquivo"> Abrir músicas </label>
+                    <input type="file" id="arquivo" multiple accept="audio/mpeg, audio/wav">
+                </div>
+            </div>
+
+            <div class="janela-reprodutor">
+            <audio controls></audio>
+            </div>
+            
+        </div>
+    <script>
+        const audio = document.querySelector("audio")
+        const entrada = document.querySelector("input")
+        
+        entrada.addEventListener("change", function() {
+            const endereco = URL.createObjectURL(entrada.files[0])
+            audio.setAttribute("src", endereco)
+            const faixas = document.querySelector("div.janela-faixas")
+            const arquivos = new Array()
+
+            function Apresentar() {
+                faixas.innerHTML = ""
+                arquivos.forEach(function(arquivo, indice) {
+                    const musica = document.createElement("div")
+                    musica.setAttribute("class", "faixa")
+                    musica.setAttribute("onclick", `Tocar(${ indice })`)
+                    musica.innerHTML = arquivo.nome
+                    faixas.appendChild(musica)
+                })
+                }
+            
+            function Tocar(indice) {
+            audio.setAttribute("src", arquivos[indice].endereco)
+            }
+            entrada.addEventListener("change", function() {
+            for ( var dado of entrada.files ) {
+                const nome = dado.name
+                const endereco = URL.createObjectURL(dado)
+                arquivos.push({ nome, endereco })
+            }
+            Apresentar()
+            })
+
+
+
+        })
+
+    </script>
+
+    </body>
+</html>

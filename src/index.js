@@ -7,5 +7,7 @@ app.whenReady()
       resizable: false,
       width: 800
     })
+    
+    janela.loadFile("./Reprodutor.html")
 
   })
